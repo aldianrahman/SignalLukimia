@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1076919487304",
+    "project_id": "signalappcommunity",
+    "storage_bucket": "signalappcommunity.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076919487304:android:294d1591b04f59e784417d",
+        "android_client_info": {
+          "package_name": "com.lukimia.signalapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076919487304-mfbn4supjgmsjiev23vqodvoae0cvck2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEXyKKntbAqqLI3obti5_fyeeSOKTXXbc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076919487304-mfbn4supjgmsjiev23vqodvoae0cvck2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
