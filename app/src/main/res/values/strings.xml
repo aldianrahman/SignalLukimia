@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">SignalApp</string>
+
+    <!-- Onboarding -->
+    <string name="lewati">Lewati</string>
+    <string name="mulai_sekarang">Mulai Sekarang</string>
+
+    <!-- Onboarding Page 1 -->
+    <string name="onboarding_title_1">Temukan Jalur Karirmu</string>
+    <string name="onboarding_desc_1">Jelajahi peran internal eksklusif dan peluang global. Kelola lamaran Anda, chat dengan perekrut, dan tanda tangani kontrak—semua dalam satu tempat.</string>
+
+    <!-- Onboarding Page 2 -->
+    <string name="onboarding_title_2">Chat Langsung dengan Perekrut</string>
+    <string name="onboarding_desc_2">Komunikasi langsung dengan perekrut tanpa hambatan. Dapatkan update real-time tentang status lamaran dan jadwal wawancara Anda.</string>
+
+    <!-- Onboarding Page 3 -->
+    <string name="onboarding_title_3">Tanda Tangan Digital Kontrak</string>
+    <string name="onboarding_desc_3">Tanda tangani kontrak kerja secara digital dengan mudah dan aman. Semua dokumen tersimpan rapi dan dapat diakses kapan saja.</string>
 </resources>

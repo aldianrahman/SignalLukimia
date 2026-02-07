@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Onboarding Colors -->
+    <color name="dark_navy">#0E1621</color>
+    <color name="dark_navy_deep">#0A0F1A</color>
+    <color name="blue_primary">#3A82F8</color>
+    <color name="text_gray">#8A99AD</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="dot_inactive">#4D8A99AD</color>
+    <color name="icon_bg">#1A3A82F8</color>
+    <color name="icon_bg_stroke">#333A82F8</color>
 </resources>
