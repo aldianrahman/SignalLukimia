@@ -40,7 +40,6 @@ android {
     }
     buildFeatures {
         compose = true
-        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -106,7 +105,4 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.6.0")
-
-    // ViewPager2
-    implementation("androidx.viewpager2:viewpager2:1.1.0")
 }

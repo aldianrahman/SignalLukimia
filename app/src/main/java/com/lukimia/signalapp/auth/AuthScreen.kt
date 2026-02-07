@@ -46,20 +46,24 @@ fun AuthScreen(navController: NavController) {
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         scope.launch {
-            googleAuthUiClient.signInWithIntent(result.data ?: return@launch)
-            val user = googleAuthUiClient.getSignedInUser()
-            if (user != null) {
-                val userRef = database.getReference("users").child(user.uid)
-                val snapshot = userRef.get().await()
-                if (snapshot.exists()) {
-                    navController.navigate("home") {
-                        popUpTo("auth") { inclusive = true }
-                    }
-                } else {
-                    navController.navigate("profile") {
-                        popUpTo("auth") { inclusive = true }
+            try {
+                googleAuthUiClient.signInWithIntent(result.data ?: return@launch)
+                val user = googleAuthUiClient.getSignedInUser()
+                if (user != null) {
+                    val userRef = database.getReference("users").child(user.uid)
+                    val snapshot = userRef.get().await()
+                    if (snapshot.exists()) {
+                        navController.navigate("home") {
+                            popUpTo("auth") { inclusive = true }
+                        }
+                    } else {
+                        navController.navigate("profile") {
+                            popUpTo("auth") { inclusive = true }
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

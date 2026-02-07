@@ -37,8 +37,12 @@ class GoogleAuthUiClient(
 
     suspend fun signInWithIntent(intent: Intent) {
         val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
-        val account = task.getResult(ApiException::class.java)!!
-        val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
+        val account = try {
+            task.getResult(ApiException::class.java)
+        } catch (e: ApiException) {
+            throw Exception("Google Sign-In gagal (kode: ${e.statusCode}). Pastikan SHA-1 sudah dikonfigurasi di Firebase Console.", e)
+        }
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential).await()
     }
 }
