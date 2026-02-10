@@ -35,6 +35,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.tasks.await
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -67,11 +68,9 @@ fun QRCodeScreen(navController: NavController) {
 
     LaunchedEffect(auth.currentUser) {
         val user = auth.currentUser ?: return@LaunchedEffect
-        database.getReference("users").child(user.uid).get()
-            .addOnSuccessListener { snapshot ->
-                fullName = snapshot.child("fullName").getValue(String::class.java) ?: ""
-                username = snapshot.child("username").getValue(String::class.java) ?: ""
-            }
+        val snapshot = database.getReference("users").child(user.uid).get().await()
+        fullName = snapshot.child("fullName").getValue(String::class.java) ?: ""
+        username = snapshot.child("username").getValue(String::class.java) ?: ""
     }
 
     Column(

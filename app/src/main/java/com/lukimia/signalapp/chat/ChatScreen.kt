@@ -9,7 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,27 +34,30 @@ fun ChatScreen(navController: NavController, chatId: String?) {
     val auth = Firebase.auth
     val database = Firebase.database
 
-    LaunchedEffect(chatId) {
-        if (chatId != null) {
-            val chatRef = database.getReference("chats").child(chatId)
-            chatRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val messageList = snapshot.children.mapNotNull {
-                        val sender = it.child("sender").getValue(String::class.java)
-                        val text = it.child("text").getValue(String::class.java)
-                        if (sender != null && text != null) {
-                            Pair(sender, text)
-                        } else {
-                            null
-                        }
+    DisposableEffect(chatId) {
+        if (chatId == null) return@DisposableEffect onDispose { }
+        val chatRef = database.getReference("chats").child(chatId)
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val messageList = snapshot.children.mapNotNull {
+                    val sender = it.child("sender").getValue(String::class.java)
+                    val text = it.child("text").getValue(String::class.java)
+                    if (sender != null && text != null) {
+                        Pair(sender, text)
+                    } else {
+                        null
                     }
-                    messages = messageList
                 }
+                messages = messageList
+            }
 
-                override fun onCancelled(error: DatabaseError) {
-                    // Handle error
-                }
-            })
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+            }
+        }
+        chatRef.addValueEventListener(listener)
+        onDispose {
+            chatRef.removeEventListener(listener)
         }
     }
 

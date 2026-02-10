@@ -27,7 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -66,10 +66,10 @@ fun ChatListScreen(navController: NavController, modifier: Modifier = Modifier) 
     val auth = Firebase.auth
     val database = Firebase.database
 
-    LaunchedEffect(auth.currentUser) {
-        val user = auth.currentUser ?: return@LaunchedEffect
+    DisposableEffect(auth.currentUser) {
+        val user = auth.currentUser ?: return@DisposableEffect onDispose { }
         val friendsRef = database.getReference("friends").child(user.uid)
-        friendsRef.addValueEventListener(object : ValueEventListener {
+        val listener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val friendIds = snapshot.children.mapNotNull { it.key }
                 if (friendIds.isEmpty()) {
@@ -96,7 +96,11 @@ fun ChatListScreen(navController: NavController, modifier: Modifier = Modifier) 
             }
 
             override fun onCancelled(error: DatabaseError) {}
-        })
+        }
+        friendsRef.addValueEventListener(listener)
+        onDispose {
+            friendsRef.removeEventListener(listener)
+        }
     }
 
     Column(
