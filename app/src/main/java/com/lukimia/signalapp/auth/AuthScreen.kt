@@ -80,7 +80,7 @@ fun AuthScreen(navController: NavController) {
 
         // Placeholder for the logo - replace with your actual logo
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground), // Ganti dengan logo Anda
+            painter = painterResource(id = R.drawable.signal_logo), // Ganti dengan logo Anda
             contentDescription = "Signal Logo",
             modifier = Modifier
                 .size(80.dp)
@@ -118,7 +118,7 @@ fun AuthScreen(navController: NavController) {
         ) {
             // Placeholder for Google icon
             Icon(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground), // Ganti dengan ikon Google
+                painter = painterResource(id = R.drawable.signal_logo), // Ganti dengan ikon Google
                 contentDescription = "Google Icon",
                 modifier = Modifier.size(24.dp),
                 tint = Color.Unspecified
