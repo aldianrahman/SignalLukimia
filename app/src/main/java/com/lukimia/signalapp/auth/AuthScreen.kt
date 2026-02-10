@@ -32,6 +32,8 @@ import com.lukimia.signalapp.ui.theme.BlueGradientStart
 import com.lukimia.signalapp.ui.theme.ButtonGray
 import com.lukimia.signalapp.ui.theme.DarkNavy
 import com.lukimia.signalapp.ui.theme.TextGray
+import android.util.Log
+import android.widget.Toast
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -46,21 +48,26 @@ fun AuthScreen(navController: NavController) {
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         scope.launch {
-            googleAuthUiClient.signInWithIntent(result.data ?: return@launch)
-            val user = googleAuthUiClient.getSignedInUser()
-            if (user != null) {
-                val userRef = database.getReference("users").child(user.uid)
-                val snapshot = userRef.get().await()
-                if (snapshot.exists()) {
-                    navController.navigate("home") {
-                        popUpTo("auth") { inclusive = true }
+            val signInResult = googleAuthUiClient.signInWithIntent(result.data ?: return@launch)
+            signInResult.fold(
+                onSuccess = { firebaseUser ->
+                    val userRef = database.getReference("users").child(firebaseUser.uid)
+                    val snapshot = userRef.get().await()
+                    if (snapshot.exists()) {
+                        navController.navigate("home") {
+                            popUpTo("auth") { inclusive = true }
+                        }
+                    } else {
+                        navController.navigate("profile") {
+                            popUpTo("auth") { inclusive = true }
+                        }
                     }
-                } else {
-                    navController.navigate("profile") {
-                        popUpTo("auth") { inclusive = true }
-                    }
+                },
+                onFailure = { e ->
+                    Log.e("AuthScreen", "Google sign-in failed", e)
+                    Toast.makeText(context, "Sign-in failed: ${e.message}", Toast.LENGTH_LONG).show()
                 }
-            }
+            )
         }
     }
 

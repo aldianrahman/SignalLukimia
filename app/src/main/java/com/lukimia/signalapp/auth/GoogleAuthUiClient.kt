@@ -5,6 +5,7 @@ import android.content.Intent
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -35,10 +36,20 @@ class GoogleAuthUiClient(
 
     suspend fun getSignedInUser() = auth.currentUser
 
-    suspend fun signInWithIntent(intent: Intent) {
-        val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
-        val account = task.getResult(ApiException::class.java)!!
-        val credential = GoogleAuthProvider.getCredential(account.idToken!!, null)
-        auth.signInWithCredential(credential).await()
+    suspend fun signInWithIntent(intent: Intent): Result<FirebaseUser> {
+        return try {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(intent)
+            val account = task.getResult(ApiException::class.java)
+                ?: return Result.failure(Exception("Google sign-in returned null account"))
+            val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+            val authResult = auth.signInWithCredential(credential).await()
+            authResult.user?.let {
+                Result.success(it)
+            } ?: Result.failure(Exception("Firebase authentication returned null user"))
+        } catch (e: ApiException) {
+            Result.failure(Exception("Google sign-in failed (code: ${e.statusCode}). Check SHA-1 fingerprint and Web Client ID configuration."))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }
