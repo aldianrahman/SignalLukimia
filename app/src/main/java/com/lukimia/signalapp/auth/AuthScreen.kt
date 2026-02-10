@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -27,8 +26,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.lukimia.signalapp.R
-import com.lukimia.signalapp.ui.theme.BlueGradientEnd
-import com.lukimia.signalapp.ui.theme.BlueGradientStart
 import com.lukimia.signalapp.ui.theme.ButtonGray
 import com.lukimia.signalapp.ui.theme.DarkNavy
 import com.lukimia.signalapp.ui.theme.TextGray
@@ -128,26 +125,6 @@ fun AuthScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.width(12.dp))
             Text(text = "Continue with Google", color = Color.White, fontSize = 16.sp)
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Use phone number button
-        Button(
-            onClick = { /* TODO: Handle phone number sign in */ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(BlueGradientStart, BlueGradientEnd)
-                    ),
-                    shape = RoundedCornerShape(8.dp)
-                ),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-            shape = RoundedCornerShape(8.dp)
-        ) {
-            Text(text = "Use phone number", color = Color.White, fontSize = 16.sp)
         }
 
         // ... (rest of the UI)
