@@ -1,7 +1,6 @@
 {
   "project_info": {
     "project_number": "1076919487304",
-    "firebase_url": "https://signalappcommunity-default-rtdb.firebaseio.com",
     "project_id": "signalappcommunity",
     "storage_bucket": "signalappcommunity.firebasestorage.app"
   },
@@ -14,14 +13,6 @@
         }
       },
       "oauth_client": [
-        {
-          "client_id": "1076919487304-i9im3ekv6nguetsnbutndlu5hlmdj913.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.lukimia.signalapp",
-            "certificate_hash": "5c0774e4375780af556a726d2c436cce491d0ee5"
-          }
-        },
         {
           "client_id": "1076919487304-mfbn4supjgmsjiev23vqodvoae0cvck2.apps.googleusercontent.com",
           "client_type": 3
