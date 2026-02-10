@@ -86,6 +86,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended")
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.06.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
@@ -102,6 +103,9 @@ dependencies {
 
     // ML Kit
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
+
+    // QR Code generation
+    implementation("com.google.zxing:core:3.5.3")
 
     // Coil
     implementation("io.coil-kt:coil-compose:2.6.0")
