@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.lukimia.signalapp.auth.AuthScreen
 import com.lukimia.signalapp.chat.ChatScreen
 import com.lukimia.signalapp.home.HomeScreen
+import com.lukimia.signalapp.home.QRCodeScreen
 import com.lukimia.signalapp.profile.ProfileScreen
 import com.lukimia.signalapp.scan.ScanScreen
 
@@ -17,6 +18,7 @@ fun NavGraph() {
         composable("auth") { AuthScreen(navController) }
         composable("profile") { ProfileScreen(navController) }
         composable("home") { HomeScreen(navController) }
+        composable("qrcode") { QRCodeScreen(navController) }
         composable("chat/{chatId}") { backStackEntry ->
             val chatId = backStackEntry.arguments?.getString("chatId")
             ChatScreen(navController, chatId)
