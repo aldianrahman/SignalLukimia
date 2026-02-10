@@ -1,6 +1,9 @@
 package com.lukimia.signalapp.home
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.People
@@ -12,7 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,48 +46,41 @@ fun HomeScreen(navController: NavController) {
         BottomNavItem("Settings", Icons.Filled.Settings, Icons.Outlined.Settings)
     )
 
-    Scaffold(
-        bottomBar = {
-            NavigationBar(
-                containerColor = DarkSurface,
-                contentColor = Color.White
-            ) {
-                navItems.forEachIndexed { index, item ->
-                    NavigationBarItem(
-                        selected = selectedTab == index,
-                        onClick = { selectedTab = index },
-                        icon = {
-                            Icon(
-                                imageVector = if (selectedTab == index) item.selectedIcon else item.unselectedIcon,
-                                contentDescription = item.title
-                            )
-                        },
-                        label = { Text(item.title, fontSize = 12.sp) },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = BlueAccent,
-                            selectedTextColor = BlueAccent,
-                            unselectedIconColor = TextGray,
-                            unselectedTextColor = TextGray,
-                            indicatorColor = Color.Transparent
-                        )
-                    )
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.weight(1f)) {
+            Crossfade(targetState = selectedTab, label = "tab_content") { tab ->
+                when (tab) {
+                    0 -> ChatListScreen(navController = navController)
+                    1 -> SocialScreen(navController = navController)
+                    2 -> SettingsScreen(navController = navController)
                 }
             }
         }
-    ) { paddingValues ->
-        when (selectedTab) {
-            0 -> ChatListScreen(
-                navController = navController,
-                modifier = Modifier.padding(paddingValues)
-            )
-            1 -> SocialScreen(
-                navController = navController,
-                modifier = Modifier.padding(paddingValues)
-            )
-            2 -> SettingsScreen(
-                navController = navController,
-                modifier = Modifier.padding(paddingValues)
-            )
+
+        NavigationBar(
+            containerColor = DarkSurface,
+            contentColor = Color.White
+        ) {
+            navItems.forEachIndexed { index, item ->
+                NavigationBarItem(
+                    selected = selectedTab == index,
+                    onClick = { selectedTab = index },
+                    icon = {
+                        Icon(
+                            imageVector = if (selectedTab == index) item.selectedIcon else item.unselectedIcon,
+                            contentDescription = item.title
+                        )
+                    },
+                    label = { Text(item.title, fontSize = 12.sp) },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = BlueAccent,
+                        selectedTextColor = BlueAccent,
+                        unselectedIconColor = TextGray,
+                        unselectedTextColor = TextGray,
+                        indicatorColor = Color.Transparent
+                    )
+                )
+            }
         }
     }
 }
